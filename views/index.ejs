@@ -35,8 +35,12 @@
             function showPosition(position) {
                 const userLatitude = position.coords.latitude;
                 const userLongitude = position.coords.longitude;
+                x.innerHTML = "Latitude: " + userLatitude + "<br>Longitude: " + userLongitude;
                 fetch("/weather", {
                     method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
                     body: JSON.stringify({
                         latitude: userLatitude,
                         longitude: userLongitude

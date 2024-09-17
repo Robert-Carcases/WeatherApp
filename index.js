@@ -10,12 +10,16 @@ const port = 4000;
 
 app.use(express.static(__dirname + '/public'));
 
-app.use(bodyParser.urlencoded({ extended: true }));
-
-const latitude = "52";
-const longitude = "13";
+app.use(express.json());
+//app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", async (req, res) => {
+    res.render("index.ejs");
+});
+
+app.post("/weather", async (req, res) => {
+    const {latitude, longitude} = req.body;
+    console.log(req.body);
     try{
         const result = await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,precipitation&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&forecast_days=1`);
         console.log(result.data);
