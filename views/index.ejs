@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <div class="container">
+        <div class="greeting">
+            <% if(locals.time && locals.city && locals.temperature && locals.condition) {%>
+            <h1>Good <%= time %>!</h1>
+        </div>
+        <div class="weather-info">
+            <h2>Weather in <%= city %></h2>
+            <p>Temperature: <%= temperature %></p>
+            <p>Condition: <%= condition %></p>
+            <% } %>
+        </div>
+        <p>Click the button to allow location data.</p>
+
+        <button onclick="getLocation()">Grant Access</button>
+    
+        <p id="demo"></p>
+        <script>
+            const x = document.getElementById("demo");
+            function getLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showPosition);
+                } else {
+                    x.innerHTML = "Geolocation is not supported by this browser.";
+                }
+            }
+            function showPosition(position) {
+                const userLatitude = position.coords.latitude;
+                const userLongitude = position.coords.longitude;
+                fetch("/weather", {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        latitude: userLatitude,
+                        longitude: userLongitude
+                    })
+                })
+            }
+        </script> 
+    </div>
+</body>
+</html>
