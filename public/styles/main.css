@@ -12,7 +12,23 @@
     min-height: 100vh;
     background-color: #f0f4f8;
   }
+
+  .page-container {
+    display: flex;
+    flex-direction: column; /* Stacks the boxes vertically */
+    align-items: center;
+    gap: 20px; /* Adds space between upperContainer and container */
+  }
   
+  .upperContainer{
+    text-align: center;
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+  }
   .container {
     text-align: center;
     background-color: #fff;

@@ -7,22 +7,18 @@
     <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-    <div class="container">
-        <div class="greeting">
-            <% if(locals.time && locals.city && locals.temperature && locals.condition) {%>
-            <h1>Good <%= time %>!</h1>
-        </div>
-        <div class="weather-info">
-            <h2>Weather in <%= city %></h2>
-            <p>Temperature: <%= temperature %></p>
-            <p>Condition: <%= condition %></p>
-            <% } %>
-        </div>
+    <div class = "page-container">
+    <div class = "upperContainer">
         <p>Click the button to allow location data.</p>
 
         <button onclick="getLocation()">Grant Access</button>
-    
+    </div>
+    <div class="container">    
         <p id="demo"></p>
+
+        <div class="weather-info" id="weather-info">
+        </div>
+
         <script>
             const x = document.getElementById("demo");
             function getLocation() {
@@ -35,7 +31,7 @@
             function showPosition(position) {
                 const userLatitude = position.coords.latitude;
                 const userLongitude = position.coords.longitude;
-                x.innerHTML = "Latitude: " + userLatitude + "<br>Longitude: " + userLongitude;
+                //x.innerHTML = "Latitude: " + userLatitude + "<br>Longitude: " + userLongitude;
                 fetch("/weather", {
                     method: 'POST',
                     headers: {
@@ -46,8 +42,21 @@
                         longitude: userLongitude
                     })
                 })
+                .then(response => response.json())
+                .then(data => {
+                    // Update the weather-info div with the new data
+                    const weatherInfo = document.getElementById('weather-info');
+                    weatherInfo.innerHTML = `
+                        <h1>Good ${data.greeting}!</h1>
+                        <p> ${data.time} </p>
+                        <h2>Weather in ${data.city}</h2>
+                        <p>Temperature: ${data.temperature}</p>
+                        <p>Condition: ${data.condition}</p>
+                    `;
+                })
             }
         </script> 
     </div>
+</div>
 </body>
 </html>
