@@ -47,11 +47,11 @@
                     // Update the weather-info div with the new data
                     const weatherInfo = document.getElementById('weather-info');
                     weatherInfo.innerHTML = `
-                        <h1>Good ${data.greeting}!</h1>
+                        <h1>${data.greeting}</h1>
                         <p> ${data.time} </p>
                         <h2>Weather in ${data.city}</h2>
                         <p>Temperature: ${data.temperature}</p>
-                        <p>Condition: ${data.condition}</p>
+                        <p>Chance of rain (Within hour): ${data.condition} %</p>
                     `;
                 })
             }
