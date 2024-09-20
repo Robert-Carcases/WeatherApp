@@ -15,11 +15,9 @@ const APIkey = process.env.API_KEY;
 app.use(express.static(__dirname + '/public'));
 app.use(express.json());
 
-function getGreeting(hour) {
+function getGreeting(hourInt) {
     try {
-        const hourInt = parseInt(hour);
         let greeting;
-
         if (hourInt >= 0 && hourInt < 12) {
             greeting = "Good Morning!";
         } else if (hourInt >= 12 && hourInt < 18) {
@@ -54,9 +52,9 @@ app.post("/weather", async (req, res) => {
         const dateTimeString = weatherResult.data.current.time;
         const [date, time] = dateTimeString.split('T');
         const [hour, minute] = time.split(':');
-        const numHour = parseInt(hour, 10);
+        const hourInt = parseInt(hour, 10);
 
-        // console.log(weatherResult.data.hourly.precipitation_probability[hour]);
+        // console.log(weatherResult.data.hourly.precipitation_probability[hourInt]);
 
         // console.log(numHour);
         // console.log(myLocation);
@@ -66,7 +64,7 @@ app.post("/weather", async (req, res) => {
             time: date + " " + time,
             city: myLocation,
             temperature: weatherResult.data.current.temperature_2m + " " + weatherResult.data.current_units.temperature_2m,
-            condition: weatherResult.data.hourly.precipitation_probability[numHour]
+            condition: weatherResult.data.hourly.precipitation_probability[hourInt]
         }
         res.json(weatherData);
     } catch (error) {
