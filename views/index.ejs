@@ -31,8 +31,6 @@
             function showPosition(position) {
                 const userLatitude = position.coords.latitude;
                 const userLongitude = position.coords.longitude;
-
-                //x.innerHTML = "Latitude: " + userLatitude + "<br>Longitude: " + userLongitude;
                 
                 fetch("/weather", {
                     method: 'POST',
@@ -46,7 +44,6 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    // Update the weather-info div with the new data
                     const weatherInfo = document.getElementById('weather-info');
                     weatherInfo.innerHTML = `
                         <h1>${data.greeting}</h1>

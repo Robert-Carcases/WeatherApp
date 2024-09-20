@@ -37,27 +37,18 @@ app.get("/", async (req, res) => {
 
 app.post("/weather", async (req, res) => {
     const {latitude, longitude} = req.body;
-    // console.log(req.body);
     try{
         const [weatherResult, locResult] = await Promise.all([
             axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,precipitation&temperature_unit=fahrenheit&hourly=precipitation_probability&wind_speed_unit=mph&precipitation_unit=inch&timezone=auto&forecast_days=1`),
 
             axios.get(`http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${APIkey}`)
         ]);
-        
-        // console.log(locResult.data);
-        // console.log(weatherResult.data);
 
         const myLocation = locResult.data[0].name;
         const dateTimeString = weatherResult.data.current.time;
         const [date, time] = dateTimeString.split('T');
         const [hour, minute] = time.split(':');
         const hourInt = parseInt(hour, 10);
-
-        // console.log(weatherResult.data.hourly.precipitation_probability[hourInt]);
-
-        // console.log(numHour);
-        // console.log(myLocation);
 
         const weatherData = {
             greeting: getGreeting(hour),
